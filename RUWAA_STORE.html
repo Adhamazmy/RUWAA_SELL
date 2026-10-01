@@ -1,0 +1,2201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RUWAA STORE | رُوَاء للأطياب والعطور - النظام المتكامل</title>
+  <style>
+    :root {
+      --bg-body: #0A0C10;
+      --bg-sidebar: #0F1218;
+      --bg-card: #151922;
+      --bg-card-hover: #191E2A;
+      --bg-input: #1C222E;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-focus: #D4AF37;
+      --gold: #D4AF37;
+      --gold-hover: #ECC870;
+      --gold-dim: rgba(212, 175, 55, 0.12);
+      --gold-gradient: linear-gradient(135deg, #ECC870 0%, #D4AF37 50%, #B89228 100%);
+      --text-white: #FFFFFF;
+      --text-main: #E2E8F0;
+      --text-muted: #8E9AA8;
+      --emerald: #10B981;
+      --emerald-dim: rgba(16, 185, 129, 0.15);
+      --amber: #F59E0B;
+      --amber-dim: rgba(245, 158, 11, 0.15);
+      --ruby: #EF4444;
+      --ruby-dim: rgba(239, 68, 68, 0.15);
+      --blue: #3B82F6;
+      --blue-dim: rgba(59, 130, 246, 0.15);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
+    body { background-color: var(--bg-body); color: var(--text-main); min-height: 100vh; display: flex; overflow-x: hidden; }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-body); }
+    ::-webkit-scrollbar-thumb { background: #232936; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+    /* Sidebar */
+    #sidebar {
+      width: 250px;
+      background: var(--bg-sidebar);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand-box {
+      padding: 26px 20px 20px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .brand-title {
+      font-size: 24px;
+      font-weight: 800;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 2px;
+    }
+    .brand-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      margin-top: 3px;
+    }
+
+    .nav-menu {
+      list-style: none;
+      padding: 14px 10px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      overflow-y: auto;
+    }
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 16px;
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.04); color: var(--gold); }
+    .nav-btn.active {
+      background: var(--gold-gradient);
+      color: #0A0C10;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.25);
+    }
+
+    .sidebar-bottom {
+      padding: 14px 18px;
+      border-top: 1px solid var(--border);
+      font-size: 11.5px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 8px var(--emerald);
+    }
+
+    /* Main Container */
+    #main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow-y: auto;
+      min-width: 0;
+    }
+
+    header {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .page-info h1 { font-size: 18px; font-weight: 700; color: var(--text-white); }
+    .page-info span { font-size: 12px; color: var(--text-muted); }
+
+    .header-badges { display: flex; align-items: center; gap: 12px; }
+    .badge-pill {
+      background: var(--gold-dim);
+      color: var(--gold);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+
+    .content-area {
+      padding: 24px 28px 50px;
+      flex: 1;
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .kpi-card:hover { transform: translateY(-2px); border-color: rgba(212,175,55,0.4); }
+    .kpi-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gold);
+    }
+    .kpi-card.blue::after { background: var(--blue); }
+    .kpi-card.green::after { background: var(--emerald); }
+    .kpi-card.red::after { background: var(--ruby); }
+
+    .kpi-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .kpi-title { font-size: 12.5px; color: var(--text-muted); }
+    .kpi-icon { font-size: 18px; }
+    .kpi-val { font-size: 22px; font-weight: 800; color: var(--text-white); }
+
+    /* Card Box */
+    .box-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      outline: none;
+      text-decoration: none;
+    }
+    .btn-gold {
+      background: var(--gold-gradient);
+      color: #0A0C10;
+      box-shadow: 0 4px 14px rgba(212, 175, 55, 0.3);
+    }
+    .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.45); }
+    .btn-dark {
+      background: #1C222E;
+      color: var(--gold);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+    }
+    .btn-dark:hover { background: #252D3D; border-color: var(--gold); }
+    .btn-subtle {
+      background: #1C222E;
+      color: var(--text-main);
+      border: 1px solid var(--border);
+    }
+    .btn-subtle:hover { background: #252D3D; color: var(--text-white); }
+    .btn-danger {
+      background: var(--ruby-dim);
+      color: var(--ruby);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .btn-danger:hover { background: var(--ruby); color: #fff; }
+    .btn-sm { padding: 6px 12px; font-size: 12px; }
+
+    /* Inputs & Filters */
+    .form-control, .select-input {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-white);
+      padding: 10px 14px;
+      font-size: 13.5px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .form-control:focus, .select-input:focus { border-color: var(--gold); }
+    label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+
+    .form-row { display: flex; gap: 14px; margin-bottom: 14px; }
+    .form-col { flex: 1; }
+
+    /* Tables */
+    .table-responsive {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow-x: auto;
+      background: var(--bg-card);
+    }
+    table { width: 100%; border-collapse: collapse; text-align: right; font-size: 13px; }
+    thead { background: #11141B; border-bottom: 1px solid var(--border); }
+    th { padding: 13px 16px; color: var(--gold); font-size: 12px; font-weight: 700; white-space: nowrap; }
+    td { padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-main); vertical-align: middle; }
+    tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+    /* Status Tags */
+    .tag { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 6px; font-size: 11.5px; font-weight: 600; }
+    .tag-green { background: var(--emerald-dim); color: var(--emerald); border: 1px solid rgba(16,185,129,0.25); }
+    .tag-amber { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); }
+    .tag-red { background: var(--ruby-dim); color: var(--ruby); border: 1px solid rgba(239,68,68,0.25); }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 7, 10, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+      padding: 20px;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .modal-box {
+      background: #141720;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 620px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+      transform: translateY(20px);
+      transition: transform 0.25s;
+    }
+    .modal-overlay.active .modal-box { transform: translateY(0); }
+    .modal-head {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-head h2 { font-size: 16px; color: var(--gold); }
+    .modal-close { background: none; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; }
+    .modal-close:hover { color: #fff; }
+    .modal-body { padding: 22px 24px; }
+    .modal-foot { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; }
+
+    /* Formula & Calculation Box */
+    .formula-box {
+      background: #10141D;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+
+    .formula-result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      background: #1A212D;
+      border: 1px solid var(--gold);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      font-size: 13.5px;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 2000;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+
+    /* POS Screen Styles */
+    .pos-layout {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 20px;
+    }
+    .cart-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .cart-items-list {
+      flex: 1;
+      overflow-y: auto;
+      max-height: 380px;
+      margin: 14px 0;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 13px;
+    }
+    .cart-total-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      font-size: 13.5px;
+      border-bottom: 1px dashed var(--border);
+    }
+    .cart-grand-total {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--gold);
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 0 8px;
+    }
+
+    /* Print Styles */
+    @media print {
+      body { background: #fff !important; color: #000 !important; }
+      #sidebar, header, .no-print { display: none !important; }
+      #main-content { overflow: visible !important; height: auto !important; }
+      .content-area { padding: 0 !important; }
+      .invoice-print-area {
+        width: 100%;
+        max-width: 750px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #000 !important;
+        background: #fff !important;
+      }
+      .invoice-print-area * { color: #000 !important; border-color: #ddd !important; }
+      .invoice-print-area table th { background: #f0f0f0 !important; color: #000 !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="no-print">
+    <div class="brand-box">
+      <div class="brand-title">✦ رُ وَ اء ✦</div>
+      <div class="brand-sub">RUWAA STORE &bull; العطور الفاخرة</div>
+    </div>
+
+    <ul class="nav-menu">
+      <li class="nav-btn active" onclick="navigate('dashboard')">
+        <span>📊</span>
+        <span>لوحة التحكم الرئيسية</span>
+      </li>
+      <li class="nav-btn" onclick="navigate('products')">
+        <span>🧴</span>
+        <span>إدارة العطور والزيوت</span>
+      </li>
+      <li class="nav-btn" onclick="navigate('pos')">
+        <span>🛒</span>
+        <span>المبيعات وتركيب الزجاجات</span>
+      </li>
+      <li class="nav-btn" onclick="navigate('invoices')">
+        <span>🧾</span>
+        <span>الفواتير والمبيعات السابقة</span>
+      </li>
+      <li class="nav-btn" onclick="navigate('customers')">
+        <span>👥</span>
+        <span>إدارة العملاء</span>
+      </li>
+      <li class="nav-btn" onclick="navigate('expenses')">
+        <span>💸</span>
+        <span>المصروفات والتكاليف</span>
+      </li>
+      <li class="nav-btn" onclick="navigate('reports')">
+        <span>📈</span>
+        <span>التقارير والأرباح</span>
+      </li>
+      <li class="nav-btn" onclick="navigate('backup')">
+        <span>💾</span>
+        <span>النسخ الاحتياطي والبيانات</span>
+      </li>
+    </ul>
+
+    <div class="sidebar-bottom">
+      <span class="pulse-dot"></span>
+      <span>النظام يعمل محلياً (Offline)</span>
+    </div>
+  </aside>
+
+  <!-- Main View -->
+  <main id="main-content">
+    <header class="no-print">
+      <div class="page-info">
+        <h1 id="page-title">لوحة التحكم الرئيسية</h1>
+        <span>نظام إدارة متجر رُوَاء للعطور</span>
+      </div>
+      <div class="header-badges">
+        <div class="badge-pill" style="cursor: pointer; background: var(--emerald-dim); color: var(--emerald); border-color: rgba(16,185,129,0.35); display: flex; align-items: center; gap: 6px;" onclick="openCashModal()" title="انقر لتعديل رصيد الخزينة الأساسي">
+          <span>💵 إجمالي الخزينة:</span>
+          <strong id="header-cash-val" style="color: #fff;">0.00 ج.م</strong>
+          <span style="font-size: 11px; color: var(--gold);">⚙️</span>
+        </div>
+        <span class="badge-pill">العملة: ج.م</span>
+        <span class="badge-pill" id="live-date">📅 2026-10-01</span>
+      </div>
+    </header>
+
+    <div class="content-area">
+
+      <!-- SECTION 1: DASHBOARD -->
+      <section id="view-dashboard">
+        <div class="kpi-grid">
+          <div class="kpi-card" style="border-color: var(--gold); background: linear-gradient(135deg, #151922, #1C2331);">
+            <div class="kpi-head">
+              <span class="kpi-title" style="color: var(--gold); font-weight: 700;">💵 إجمالي الفلوس (الخزينة)</span>
+              <button class="btn btn-sm btn-subtle" onclick="openCashModal()" style="padding: 2px 7px; font-size: 11px;">تعديل ⚙️</button>
+            </div>
+            <div class="kpi-val" id="dash-cash-total" style="color: var(--gold); font-size: 24px;">0.00 ج.م</div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 5px; display: flex; justify-content: space-between;">
+              <span>أساسي: <strong id="dash-cash-initial" style="color: #fff;">0.00</strong></span>
+              <span>+ مبيعات: <strong id="dash-cash-sales" style="color: var(--emerald);">0.00</strong></span>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-head">
+              <span class="kpi-title">إجمالي العطور المسجلة</span>
+              <span class="kpi-icon">🧴</span>
+            </div>
+            <div class="kpi-val" id="dash-total-prods">0 عطر</div>
+          </div>
+
+          <div class="kpi-card blue">
+            <div class="kpi-head">
+              <span class="kpi-title">المخزون المتوفر (جرام زيت)</span>
+              <span class="kpi-icon">⚖️</span>
+            </div>
+            <div class="kpi-val" id="dash-total-units">0 جرام</div>
+          </div>
+
+          <div class="kpi-card green">
+            <div class="kpi-head">
+              <span class="kpi-title">مبيعات اليوم</span>
+              <span class="kpi-icon">💵</span>
+            </div>
+            <div class="kpi-val" id="dash-today-sales">0.00 ج.م</div>
+          </div>
+
+          <div class="kpi-card green">
+            <div class="kpi-head">
+              <span class="kpi-title">إجمالي المبيعات</span>
+              <span class="kpi-icon">📈</span>
+            </div>
+            <div class="kpi-val" id="dash-total-sales">0.00 ج.م</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-head">
+              <span class="kpi-title">صافي الأرباح المحققة</span>
+              <span class="kpi-icon">💰</span>
+            </div>
+            <div class="kpi-val" id="dash-total-profit" style="color: var(--emerald);">0.00 ج.م</div>
+          </div>
+
+          <div class="kpi-card red">
+            <div class="kpi-head">
+              <span class="kpi-title">إجمالي المصروفات</span>
+              <span class="kpi-icon">💸</span>
+            </div>
+            <div class="kpi-val" id="dash-total-expenses">0.00 ج.م</div>
+          </div>
+
+          <div class="kpi-card blue">
+            <div class="kpi-head">
+              <span class="kpi-title">عدد العملاء</span>
+              <span class="kpi-icon">👥</span>
+            </div>
+            <div class="kpi-val" id="dash-total-customers">0 عميل</div>
+          </div>
+
+          <div class="kpi-card red">
+            <div class="kpi-head">
+              <span class="kpi-title">زيوت عطرية منخفضة</span>
+              <span class="kpi-icon">⚠️</span>
+            </div>
+            <div class="kpi-val" id="dash-low-stock-count">0 عطر</div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+          <!-- Recent Sales Table -->
+          <div class="box-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+              <h3 style="font-size: 15px; color: var(--gold);">🛒 آخر عمليات البيع</h3>
+              <button class="btn btn-sm btn-gold" onclick="navigate('pos')">➕ عملية بيع جديدة</button>
+            </div>
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>رقم الفاتورة</th>
+                    <th>التاريخ والوقت</th>
+                    <th>العميل</th>
+                    <th>الإجمالي</th>
+                    <th>إجراء</th>
+                  </tr>
+                </thead>
+                <tbody id="dash-recent-sales">
+                  <tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 25px;">لا توجد مبيعات مسجلة حتى الآن.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Low Stock Alert Box -->
+          <div class="box-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+              <h3 style="font-size: 15px; color: var(--ruby);">⚠️ تنبيه نواقص الزيوت</h3>
+              <button class="btn btn-sm btn-subtle" onclick="navigate('products')">المخزن</button>
+            </div>
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>العطر</th>
+                    <th>الشركة</th>
+                    <th>المتبقي (جرام)</th>
+                  </tr>
+                </thead>
+                <tbody id="dash-low-stock-table">
+                  <tr><td colspan="3" style="text-align: center; color: var(--text-muted); padding: 25px;">المخزون متوفر بالكامل.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: PRODUCTS -->
+      <section id="view-products" style="display: none;">
+        <div class="box-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <button class="btn btn-gold" onclick="openAddProductModal()">➕ إضافة عطر جديد</button>
+            <input type="text" id="prod-search" class="form-control" style="width: 250px;" placeholder="بحث باسم العطر، الشركة، المورد..." oninput="renderProductsTable()">
+            <select id="prod-filter-company" class="select-input" style="width: 170px;" onchange="renderProductsTable()">
+              <option value="الكل">كل الشركات</option>
+            </select>
+            <label style="display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--ruby); cursor: pointer; margin: 0;">
+              <input type="checkbox" id="prod-filter-low" onchange="renderProductsTable()">
+              <span>المنخفض فقط ⚠️</span>
+            </label>
+          </div>
+          <div>
+            <span style="font-size: 13px; color: var(--text-muted);">إجمالي العطور: <strong id="prods-count" style="color: var(--gold);">0</strong></span>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 50px;">#</th>
+                <th>اسم العطر</th>
+                <th>الشركة</th>
+                <th>اسم المورد</th>
+                <th>تكلفة الجرام</th>
+                <th>سعر بيع الجرام</th>
+                <th>ربح الجرام</th>
+                <th>المخزون (جرام)</th>
+                <th>الحالة</th>
+                <th style="text-align: left;">إجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="products-table-body">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION 3: POS / SALES -->
+      <section id="view-pos" style="display: none;">
+        <div class="pos-layout">
+          <!-- Left: Product Selection -->
+          <div class="box-card">
+            <h3 style="color: var(--gold); margin-bottom: 14px; font-size: 16px;">🛍️ اختيار العطر لتركيب الزجاجة</h3>
+            
+            <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+              <input type="text" id="pos-search" class="form-control" placeholder="ابحث باسم العطر أو الشركة..." oninput="renderPosProductGrid()">
+              <select id="pos-company-filter" class="select-input" style="width: 170px;" onchange="renderPosProductGrid()">
+                <option value="الكل">كل الشركات</option>
+              </select>
+            </div>
+
+            <div id="pos-product-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; max-height: 520px; overflow-y: auto;">
+              <!-- Cards rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Right: Cart / Invoice Summary -->
+          <div class="cart-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px;">
+              <h3 style="color: var(--gold); font-size: 16px;">🧾 تفاصيل الفاتورة والزجاجات</h3>
+              <button class="btn btn-sm btn-subtle" onclick="clearCart()">تفريغ السلة</button>
+            </div>
+
+            <!-- Customer selection -->
+            <div style="margin-top: 14px;">
+              <label>اختيار العميل:</label>
+              <div style="display: flex; gap: 6px;">
+                <select id="pos-customer" class="select-input">
+                  <option value="عميل نقدي">عميل نقدي (افتراضي)</option>
+                </select>
+                <button class="btn btn-sm btn-dark" onclick="openAddCustomerModal()">+ عميل</button>
+              </div>
+            </div>
+
+            <!-- Cart list -->
+            <div class="cart-items-list" id="cart-items-container">
+              <div style="text-align: center; color: var(--text-muted); padding: 40px 0;">السلة فارغة. اختر عطوراً لإضافتها.</div>
+            </div>
+
+            <!-- Calculation breakdown -->
+            <div style="border-top: 1px solid var(--border); padding-top: 10px;">
+              <div class="cart-total-row">
+                <span>المجموع الجزئي:</span>
+                <span id="pos-subtotal">0.00 ج.م</span>
+              </div>
+              <div class="cart-total-row" style="align-items: center;">
+                <span>الخصم:</span>
+                <div style="display: flex; align-items: center; gap: 5px;">
+                  <input type="number" id="pos-discount" class="form-control" style="width: 90px; padding: 4px 8px;" value="0" min="0" oninput="updateCartCalculations()">
+                  <span style="font-size: 12px;">ج.م</span>
+                </div>
+              </div>
+              <div class="cart-grand-total">
+                <span>الإجمالي النهائي:</span>
+                <span id="pos-grand-total">0.00 ج.م</span>
+              </div>
+
+              <!-- Payment details -->
+              <div class="form-row" style="margin-top: 10px; margin-bottom: 10px;">
+                <div class="form-col">
+                  <label>المدفوع:</label>
+                  <input type="number" id="pos-paid" class="form-control" value="0" min="0" oninput="updateCartCalculations()">
+                </div>
+                <div class="form-col">
+                  <label>المتبقي / الباقي:</label>
+                  <input type="text" id="pos-change" class="form-control" readonly value="0.00" style="color: var(--gold); font-weight: 700;">
+                </div>
+              </div>
+
+              <button class="btn btn-gold" style="width: 100%; justify-content: center; padding: 12px; font-size: 14px;" onclick="completeSale()">
+                <span>✔</span>
+                <span>إتمام عملية البيع وطباعة الفاتورة</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: INVOICES -->
+      <section id="view-invoices" style="display: none;">
+        <div class="box-card" style="display: flex; justify-content: space-between; align-items: center;">
+          <input type="text" id="inv-search" class="form-control" style="width: 280px;" placeholder="بحث برقم الفاتورة أو العميل..." oninput="renderInvoicesTable()">
+          <span style="color: var(--text-muted); font-size: 13px;">إجمالي الفواتير: <strong id="invoices-count" style="color: var(--gold);">0</strong></span>
+        </div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>رقم الفاتورة</th>
+                <th>التاريخ والوقت</th>
+                <th>اسم العميل</th>
+                <th>الزجاجات المركبة</th>
+                <th>الخصم</th>
+                <th>الإجمالي</th>
+                <th>المدفوع</th>
+                <th>المتبقي</th>
+                <th style="text-align: left;">إجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="invoices-table-body">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION 5: CUSTOMERS -->
+      <section id="view-customers" style="display: none;">
+        <div class="box-card" style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-gold" onclick="openAddCustomerModal()">➕ إضافة عميل جديد</button>
+            <input type="text" id="cust-search" class="form-control" style="width: 250px;" placeholder="بحث بالاسم أو الهاتف..." oninput="renderCustomersTable()">
+          </div>
+          <span style="color: var(--text-muted); font-size: 13px;">عدد العملاء: <strong id="custs-count" style="color: var(--gold);">0</strong></span>
+        </div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>اسم العميل</th>
+                <th>رقم الهاتف</th>
+                <th>العنوان</th>
+                <th>إجمالي المشتريات</th>
+                <th>عدد الفواتير</th>
+                <th>ملاحظات</th>
+                <th style="text-align: left;">إجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="customers-table-body">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION 6: EXPENSES -->
+      <section id="view-expenses" style="display: none;">
+        <div class="box-card" style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-gold" onclick="openAddExpenseModal()">➕ تسجيل مصروف جديد</button>
+            <select id="exp-filter-cat" class="select-input" style="width: 180px;" onchange="renderExpensesTable()">
+              <option value="الكل">كل التصنيفات</option>
+              <option value="شحن وتوصيل">شحن وتوصيل</option>
+              <option value="تغليف وعلب">تغليف وعلب</option>
+              <option value="إيجار وفواتير">إيجار وفواتير</option>
+              <option value="مواصلات وانتقالات">مواصلات وانتقالات</option>
+              <option value="أدوات وزجاجات">أدوات وزجاجات</option>
+              <option value="أخرى">أخرى</option>
+            </select>
+          </div>
+          <span style="color: var(--text-muted); font-size: 13px;">إجمالي المصروفات: <strong id="exp-total-val" style="color: var(--ruby);">0.00 ج.م</strong></span>
+        </div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>اسم المصروف / البند</th>
+                <th>القيمة (ج.م)</th>
+                <th>التصنيف</th>
+                <th>التاريخ</th>
+                <th>ملاحظات</th>
+                <th style="text-align: left;">إجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="expenses-table-body">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION 7: REPORTS -->
+      <section id="view-reports" style="display: none;">
+        <div class="box-card">
+          <h3 style="color: var(--gold); margin-bottom: 16px;">📈 التقرير المالي الشامل للأرباح والمخزون</h3>
+          
+          <div class="kpi-grid">
+            <div class="kpi-card green">
+              <div class="kpi-title">إجمالي المبيعات المحققة</div>
+              <div class="kpi-val" id="rep-total-sales">0.00 ج.م</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-title">تكلفة الزيوت والزجاجات المباعة</div>
+              <div class="kpi-val" id="rep-total-cogs">0.00 ج.م</div>
+            </div>
+            <div class="kpi-card red">
+              <div class="kpi-title">إجمالي المصروفات العامة</div>
+              <div class="kpi-val" id="rep-total-exp">0.00 ج.م</div>
+            </div>
+            <div class="kpi-card" style="border-color: var(--gold);">
+              <div class="kpi-title">صافي الأرباح الفعلي (Net Profit)</div>
+              <div class="kpi-val" id="rep-net-profit" style="color: var(--gold);">0.00 ج.م</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <!-- Top Selling Products -->
+          <div class="box-card">
+            <h3 style="color: var(--gold); margin-bottom: 12px; font-size: 15px;">🏆 العطور الأكثر مبيعاً (بالجرام)</h3>
+            <div class="table-responsive">
+              <table>
+                <thead>
+                  <tr>
+                    <th>اسم العطر</th>
+                    <th>الشركة</th>
+                    <th>جرامات الزيت المباعة</th>
+                    <th>إجمالي الإيراد</th>
+                  </tr>
+                </thead>
+                <tbody id="rep-top-products">
+                  <tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 20px;">لا توجد مبيعات بعد.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Inventory Health Report -->
+          <div class="box-card">
+            <h3 style="color: var(--gold); margin-bottom: 12px; font-size: 15px;">📊 تقييم مخزون الزيوت العطرية</h3>
+            <div style="display: flex; flex-direction: column; gap: 14px; padding: 10px 0;">
+              <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
+                <span style="color: var(--text-muted);">إجمالي جرامات الزيت المتوفرة:</span>
+                <strong id="rep-total-grams" style="color: var(--text-white);">0 جرام</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
+                <span style="color: var(--text-muted);">قيمة مخزون الزيت (بالتكلفة):</span>
+                <strong id="rep-inv-cost" style="color: var(--text-white);">0.00 ج.م</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">
+                <span style="color: var(--text-muted);">قيمة مخزون الزيت (بسعر البيع):</span>
+                <strong id="rep-inv-sell" style="color: var(--emerald);">0.00 ج.م</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 8: BACKUP -->
+      <section id="view-backup" style="display: none;">
+        <div class="box-card">
+          <h3 style="color: var(--gold); margin-bottom: 10px;">💾 إدارة البيانات والنسخ الاحتياطي (Backup & Restore)</h3>
+          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 24px;">
+            يتم حفظ بياناتك تلقائياً داخل المتصفح. ننصح بتنزيل نسخة احتياطية بصيغة JSON دورياً لحفظ بياناتك في أمان تام.
+          </p>
+
+          <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+            <button class="btn btn-gold" onclick="exportDatabaseBackup()">
+              <span>📥</span>
+              <span>تنزيل نسخة احتياطية الآن (JSON)</span>
+            </button>
+
+            <label class="btn btn-subtle" style="cursor: pointer;">
+              <span>📤</span>
+              <span>استعادة نسخة احتياطية من ملف</span>
+              <input type="file" id="backup-file-input" accept=".json" style="display: none;" onchange="importDatabaseBackup(event)">
+            </label>
+
+            <button class="btn btn-danger" onclick="resetDatabasePrompt()">
+              <span>⚠️</span>
+              <span>مسح كل البيانات والبدء من الصفر</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- MODAL: ADD / EDIT PERFUME (Customized exactly as requested) -->
+  <div class="modal-overlay" id="modal-product">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2 id="modal-prod-title">إضافة عطر جديد</h2>
+        <button class="modal-close" onclick="closeModal('modal-product')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="p-id">
+        
+        <!-- 1. اسم العطر -->
+        <div style="margin-bottom: 14px;">
+          <label>اسم العطر *</label>
+          <input type="text" id="p-name" class="form-control" placeholder="مثال: سوفاج، توم فورد توباكو، عود بوكيه...">
+        </div>
+
+        <!-- 2. الشركة + اسم المورد -->
+        <div class="form-row">
+          <div class="form-col">
+            <label>الشركة *</label>
+            <input type="text" id="p-company" class="form-control" placeholder="مثال: ديور، لورينزو، لطافة...">
+          </div>
+          <div class="form-col">
+            <label>اسم المورد *</label>
+            <input type="text" id="p-supplier" class="form-control" placeholder="مثال: مورد الزيوت، شركة العطور...">
+          </div>
+        </div>
+
+        <!-- 3. سعر التكلفة للجرام وسعر البيع للجرام -->
+        <div class="form-row">
+          <div class="form-col">
+            <label>سعر التكلفة لجرام الزيت (ج.م) *</label>
+            <input type="number" id="p-cost-gram" class="form-control" value="2.5" step="any" oninput="calcGramProfitAndFormula()">
+          </div>
+          <div class="form-col">
+            <label>سعر البيع لجرام الزيت (ج.م) *</label>
+            <input type="number" id="p-sell-gram" class="form-control" value="5.0" step="any" oninput="calcGramProfitAndFormula()">
+          </div>
+        </div>
+
+        <!-- ربح الجرام الواحد -->
+        <div style="background: #18202C; border: 1px solid rgba(212, 175, 55, 0.25); border-radius: var(--radius-sm); padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <span>ربح الجرام الواحد: <strong id="p-profit-gram-val" style="color: var(--emerald);">+2.50 ج.م</strong></span>
+          <span>هامش ربح الجرام: <strong id="p-margin-gram-val" style="color: var(--gold);">50%</strong></span>
+        </div>
+
+        <!-- 4. حاسبة الزجاجة التلقائية: (كمية الزيت * سعر البيع) + سعر الزجاجة -->
+        <div class="formula-box">
+          <div style="font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 8px;">
+            🧪 حاسبة تركيب الزجاجة: <span style="font-size: 11.5px; color: var(--text-muted); font-weight: normal;">(كمية الزيت × السعر) + سعر الزجاجة</span>
+          </div>
+
+          <div class="form-row" style="margin-bottom: 8px;">
+            <div class="form-col">
+              <label>كمية الزيت المطلوبة (جرام)</label>
+              <input type="number" id="calc-oil-grams" class="form-control" value="15" step="any" oninput="calcGramProfitAndFormula()">
+            </div>
+            <div class="form-col">
+              <label>سعر الزجاجة الفارغة (ج.م)</label>
+              <input type="number" id="calc-bottle-price" class="form-control" value="15" step="any" oninput="calcGramProfitAndFormula()">
+            </div>
+          </div>
+
+          <!-- النتائج التلقائية للزجاجة -->
+          <div class="formula-result-grid">
+            <div>
+              <div style="font-size: 11px; color: var(--text-muted);">التكلفة النهائية للزجاجة:</div>
+              <strong id="res-final-cost" style="color: #fff; font-size: 15px;">52.50 ج.م</strong>
+            </div>
+            <div>
+              <div style="font-size: 11px; color: var(--text-muted);">سعر البيع النهائي للزجاجة:</div>
+              <strong id="res-final-sell" style="color: var(--gold); font-size: 16px;">90.00 ج.م</strong>
+            </div>
+            <div>
+              <div style="font-size: 11px; color: var(--text-muted);">صافي ربح الزجاجة:</div>
+              <strong id="res-final-profit" style="color: var(--emerald); font-size: 15px;">+37.50 ج.م</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. الكمية المتوفرة بالمخزن والحد الأدنى -->
+        <div class="form-row">
+          <div class="form-col">
+            <label>كمية الزيت المتوفرة بالمخزن (جرام) *</label>
+            <input type="number" id="p-qty-grams" class="form-control" value="100">
+          </div>
+          <div class="form-col">
+            <label>الحد الأدنى للتنبيه (جرام)</label>
+            <input type="number" id="p-min-grams" class="form-control" value="20">
+          </div>
+        </div>
+
+        <!-- ملاحظات -->
+        <div style="margin-bottom: 10px;">
+          <label>ملاحظات إضافية (اختياري)</label>
+          <input type="text" id="p-notes" class="form-control" placeholder="رقم الباتش أو جودة الزيت...">
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-subtle" onclick="closeModal('modal-product')">إلغاء</button>
+        <button class="btn btn-gold" onclick="saveProduct()">💾 حفظ العطر</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD BOTTLE TO CART (In POS) -->
+  <div class="modal-overlay" id="modal-pos-add">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-head">
+        <h2 id="pos-modal-title">تركيب زجاجة عطر</h2>
+        <button class="modal-close" onclick="closeModal('modal-pos-add')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="pos-selected-pid">
+        <div style="margin-bottom: 12px; font-weight: 700; color: var(--gold); font-size: 15px;" id="pos-modal-perfume-name">اسم العطر</div>
+
+        <div class="form-row">
+          <div class="form-col">
+            <label>سعر بيع الجرام</label>
+            <input type="text" id="pos-modal-gram-sell" class="form-control" readonly>
+          </div>
+          <div class="form-col">
+            <label>كمية الزيت بالزجاجة (جرام)</label>
+            <input type="number" id="pos-modal-grams" class="form-control" value="15" min="1" oninput="calcPosBottleTotal()">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-col">
+            <label>سعر الزجاجة الفارغة (ج.م)</label>
+            <input type="number" id="pos-modal-bottle-cost" class="form-control" value="15" min="0" oninput="calcPosBottleTotal()">
+          </div>
+          <div class="form-col">
+            <label>عدد الزجاجات</label>
+            <input type="number" id="pos-modal-bottles-count" class="form-control" value="1" min="1" oninput="calcPosBottleTotal()">
+          </div>
+        </div>
+
+        <div style="background: #10141D; border: 1px solid var(--gold); border-radius: var(--radius-sm); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+          <span style="font-weight: 700;">سعر البيع النهائي:</span>
+          <strong id="pos-modal-total-display" style="font-size: 18px; color: var(--gold);">0.00 ج.م</strong>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-subtle" onclick="closeModal('modal-pos-add')">إلغاء</button>
+        <button class="btn btn-gold" onclick="confirmAddPosBottle()">➕ إضافة للفاتورة</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD CUSTOMER -->
+  <div class="modal-overlay" id="modal-customer">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-head">
+        <h2 id="modal-cust-title">إضافة عميل جديد</h2>
+        <button class="modal-close" onclick="closeModal('modal-customer')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="c-id">
+        <div style="margin-bottom: 12px;">
+          <label>اسم العميل *</label>
+          <input type="text" id="c-name" class="form-control" placeholder="اسم العميل">
+        </div>
+        <div style="margin-bottom: 12px;">
+          <label>رقم الهاتف</label>
+          <input type="text" id="c-phone" class="form-control" placeholder="01xxxxxxxxx">
+        </div>
+        <div style="margin-bottom: 12px;">
+          <label>العنوان</label>
+          <input type="text" id="c-address" class="form-control" placeholder="المدينة / المنطقة">
+        </div>
+        <div style="margin-bottom: 12px;">
+          <label>ملاحظات</label>
+          <input type="text" id="c-notes" class="form-control" placeholder="ملاحظات إضافية">
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-subtle" onclick="closeModal('modal-customer')">إلغاء</button>
+        <button class="btn btn-gold" onclick="saveCustomer()">💾 حفظ العميل</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD EXPENSE -->
+  <div class="modal-overlay" id="modal-expense">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-head">
+        <h2>تسجيل مصروف جديد</h2>
+        <button class="modal-close" onclick="closeModal('modal-expense')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom: 12px;">
+          <label>اسم المصروف / البند *</label>
+          <input type="text" id="e-title" class="form-control" placeholder="مثال: شراء كراتين تغليف">
+        </div>
+        <div class="form-row">
+          <div class="form-col">
+            <label>المبلغ (ج.م) *</label>
+            <input type="number" id="e-amount" class="form-control" value="0.0" step="any">
+          </div>
+          <div class="form-col">
+            <label>التصنيف</label>
+            <select id="e-category" class="select-input">
+              <option value="شحن وتوصيل">شحن وتوصيل</option>
+              <option value="تغليف وعلب">تغليف وعلب</option>
+              <option value="إيجار وفواتير">إيجار وفواتير</option>
+              <option value="مواصلات وانتقالات">مواصلات وانتقالات</option>
+              <option value="أدوات وزجاجات">أدوات وزجاجات</option>
+              <option value="أخرى">أخرى</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-bottom: 12px;">
+          <label>التاريخ</label>
+          <input type="date" id="e-date" class="form-control">
+        </div>
+        <div style="margin-bottom: 12px;">
+          <label>ملاحظات</label>
+          <input type="text" id="e-notes" class="form-control" placeholder="ملاحظات إضافية">
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn btn-subtle" onclick="closeModal('modal-expense')">إلغاء</button>
+        <button class="btn btn-gold" onclick="saveExpense()">💾 حفظ المصروف</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: INVOICE PRINT PREVIEW -->
+  <div class="modal-overlay" id="modal-invoice">
+    <div class="modal-box" style="max-width: 680px;">
+      <div class="modal-head no-print">
+        <h2>🧾 عرض الفاتورة والطباعة</h2>
+        <button class="modal-close" onclick="closeModal('modal-invoice')">&times;</button>
+      </div>
+      <div class="modal-body" id="invoice-printable-area">
+        <!-- Rendered via JS -->
+      </div>
+      <div class="modal-foot no-print">
+        <button class="btn btn-danger" id="btn-cancel-invoice" style="margin-left: auto;">إلغاء الفاتورة واسترجاع المخزون 🔄</button>
+        <button class="btn btn-subtle" onclick="closeModal('modal-invoice')">إغلاق</button>
+        <button class="btn btn-gold" onclick="window.print()">🖨️ طباعة الفاتورة الآن</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast">✨ تم حفظ التغييرات بنجاح</div>
+
+  <script>
+    /* =========================================================
+       RUWAA STORE - LOCAL DATABASE (100% OFFLINE)
+       ========================================================= */
+    const DB_KEY = "RUWAA_STORE_DATA_PERFUME_V3";
+
+    function getDB() {
+      const raw = localStorage.getItem(DB_KEY);
+      if (!raw) {
+        const initialDB = {
+          products: [],
+          sales: [],
+          customers: [
+            { id: 1, name: "عميل نقدي", phone: "-", address: "-", notes: "عميل المتجر الافتراضي" }
+          ],
+          expenses: [],
+          settings: {
+            storeName: "RUWAA STORE | رُوَاء للأطياب والعطور",
+            currency: "ج.م",
+            invoiceCounter: 1
+          }
+        };
+        localStorage.setItem(DB_KEY, JSON.stringify(initialDB));
+        return initialDB;
+      }
+      return JSON.parse(raw);
+    }
+
+    function saveDB(db) {
+      localStorage.setItem(DB_KEY, JSON.stringify(db));
+    }
+
+    // Global in-memory cart
+    let cart = [];
+
+    // Initialization
+    window.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("live-date").textContent = "📅 " + new Date().toISOString().split("T")[0];
+      document.getElementById("e-date").value = new Date().toISOString().split("T")[0];
+      updateCustomerDropdowns();
+      updateCompanyDropdowns();
+      refreshAll();
+    });
+
+    function refreshAll() {
+      renderDashboard();
+      renderProductsTable();
+      renderInvoicesTable();
+      renderCustomersTable();
+      renderExpensesTable();
+      renderReports();
+      renderPosProductGrid();
+    }
+
+    // Navigation Tab switcher
+    function navigate(tab) {
+      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+      event.currentTarget.classList.add("active");
+
+      const views = ["dashboard", "products", "pos", "invoices", "customers", "expenses", "reports", "backup"];
+      views.forEach(v => {
+        const el = document.getElementById("view-" + v);
+        if (el) el.style.display = (v === tab) ? "block" : "none";
+      });
+
+      const titles = {
+        dashboard: "لوحة التحكم الرئيسية",
+        products: "إدارة العطور والزيوت",
+        pos: "المبيعات وتركيب الزجاجات (POS)",
+        invoices: "الفواتير وسجل المبيعات",
+        customers: "إدارة العملاء",
+        expenses: "المصروفات والتكاليف",
+        reports: "التقارير والأرباح الشاملة",
+        backup: "النسخ الاحتياطي والبيانات"
+      };
+      document.getElementById("page-title").textContent = titles[tab] || "متجر رُوَاء";
+
+      if (tab === "pos") renderPosProductGrid();
+      if (tab === "reports") renderReports();
+      if (tab === "dashboard") renderDashboard();
+    }
+
+    /* =========================================================
+       1. DASHBOARD
+       ========================================================= */
+    function renderDashboard() {
+      const db = getDB();
+      const prods = db.products || [];
+      const sales = db.sales || [];
+      const exps = db.expenses || [];
+      const custs = db.customers || [];
+
+      document.getElementById("dash-total-prods").textContent = prods.length + " عطر";
+      const totalGrams = prods.reduce((sum, p) => sum + Number(p.quantity || 0), 0);
+      document.getElementById("dash-total-units").textContent = totalGrams + " جرام";
+
+      const todayStr = new Date().toISOString().split("T")[0];
+      const todaySalesVal = sales
+        .filter(s => (s.date || "").startsWith(todayStr))
+        .reduce((sum, s) => sum + Number(s.total || 0), 0);
+      document.getElementById("dash-today-sales").textContent = todaySalesVal.toFixed(2) + " ج.م";
+
+      const totalSalesVal = sales.reduce((sum, s) => sum + Number(s.total || 0), 0);
+      document.getElementById("dash-total-sales").textContent = totalSalesVal.toFixed(2) + " ج.م";
+
+      const totalProfitVal = sales.reduce((sum, s) => sum + Number(s.profit || 0), 0);
+      document.getElementById("dash-total-profit").textContent = totalProfitVal.toFixed(2) + " ج.م";
+
+      const totalExpVal = exps.reduce((sum, e) => sum + Number(e.amount || 0), 0);
+      document.getElementById("dash-total-expenses").textContent = totalExpVal.toFixed(2) + " ج.م";
+
+      document.getElementById("dash-total-customers").textContent = custs.length + " عميل";
+
+      const lowStockProds = prods.filter(p => Number(p.quantity) <= Number(p.min_stock));
+      document.getElementById("dash-low-stock-count").textContent = lowStockProds.length + " عطر";
+
+      const recentSalesTbody = document.getElementById("dash-recent-sales");
+      const recent = [...sales].reverse().slice(0, 5);
+      if (recent.length === 0) {
+        recentSalesTbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 25px;">لا توجد مبيعات مسجلة حتى الآن.</td></tr>`;
+      } else {
+        recentSalesTbody.innerHTML = recent.map(s => `
+          <tr>
+            <td style="color: var(--gold); font-weight: 700;">#${s.invoiceNumber}</td>
+            <td>${s.date}</td>
+            <td>${escapeHtml(s.customerName)}</td>
+            <td style="font-weight: 700;">${Number(s.total).toFixed(2)} ج.م</td>
+            <td><button class="btn btn-sm btn-subtle" onclick="previewInvoice('${s.id}')">عرض 👁️</button></td>
+          </tr>
+        `).join("");
+      }
+
+      const lowTbody = document.getElementById("dash-low-stock-table");
+      if (lowStockProds.length === 0) {
+        lowTbody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--text-muted); padding: 25px;">المخزون متوفر بالكامل.</td></tr>`;
+      } else {
+        lowTbody.innerHTML = lowStockProds.slice(0, 5).map(p => `
+          <tr>
+            <td style="font-weight: 600;">${escapeHtml(p.name)}</td>
+            <td style="color: var(--text-muted);">${escapeHtml(p.company || "-")}</td>
+            <td style="color: var(--ruby); font-weight: 700;">${p.quantity} جرام</td>
+          </tr>
+        `).join("");
+      }
+    }
+
+    /* =========================================================
+       2. PRODUCTS MANAGEMENT
+       ========================================================= */
+    function updateCompanyDropdowns() {
+      const db = getDB();
+      const prods = db.products || [];
+      const companies = Array.from(new Set(prods.map(p => p.company).filter(Boolean)));
+      
+      const filterSelect = document.getElementById("prod-filter-company");
+      const posSelect = document.getElementById("pos-company-filter");
+      
+      filterSelect.innerHTML = `<option value="الكل">كل الشركات</option>` + companies.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+      posSelect.innerHTML = `<option value="الكل">كل الشركات</option>` + companies.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+    }
+
+    function renderProductsTable() {
+      const db = getDB();
+      const prods = db.products || [];
+      const search = (document.getElementById("prod-search").value || "").toLowerCase();
+      const company = document.getElementById("prod-filter-company").value;
+      const lowOnly = document.getElementById("prod-filter-low").checked;
+
+      const filtered = prods.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(search) || 
+                              (p.company || "").toLowerCase().includes(search) || 
+                              (p.supplier || "").toLowerCase().includes(search);
+        const matchesComp = (company === "الكل" || p.company === company);
+        const matchesLow = !lowOnly || (Number(p.quantity) <= Number(p.min_stock));
+        return matchesSearch && matchesComp && matchesLow;
+      });
+
+      document.getElementById("prods-count").textContent = filtered.length;
+      const tbody = document.getElementById("products-table-body");
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 35px;">لا توجد عطور مسجلة. اضغط "➕ إضافة عطر جديد" للبدء.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(p => {
+        const costGram = Number(p.cost_gram || 0);
+        const sellGram = Number(p.sell_gram || 0);
+        const profitGram = sellGram - costGram;
+        const qtyGrams = Number(p.quantity || 0);
+        const minGrams = Number(p.min_stock || 20);
+
+        let tagHtml = `<span class="tag tag-green">● متوفر</span>`;
+        if (qtyGrams <= 0) tagHtml = `<span class="tag tag-red">✕ نفد</span>`;
+        else if (qtyGrams <= minGrams) tagHtml = `<span class="tag tag-amber">▲ منخفض (${qtyGrams}g)</span>`;
+
+        return `
+          <tr>
+            <td style="color: var(--text-muted); font-size: 11.5px;">#${p.id}</td>
+            <td style="font-weight: 700; color: #fff; font-size: 14px;">${escapeHtml(p.name)}</td>
+            <td><span style="background: rgba(212,175,55,0.12); color: var(--gold); padding: 3px 9px; border-radius: 4px; font-weight: 600;">${escapeHtml(p.company || "-")}</span></td>
+            <td style="color: var(--text-main);">${escapeHtml(p.supplier || "-")}</td>
+            <td style="font-weight: 600;">${costGram.toFixed(2)} ج.م</td>
+            <td style="font-weight: 700; color: var(--text-white);">${sellGram.toFixed(2)} ج.م</td>
+            <td style="color: var(--emerald); font-weight: 700;">+${profitGram.toFixed(2)} ج.م</td>
+            <td style="font-weight: 700;">${qtyGrams} جرام</td>
+            <td>${tagHtml}</td>
+            <td style="text-align: left; white-space: nowrap;">
+              <button class="btn btn-sm btn-subtle" onclick='openEditProductModal(${JSON.stringify(p).replace(/'/g, "&apos;")})'>✏️ تعديل</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteProduct(${p.id}, '${escapeHtml(p.name)}')">🗑️</button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function openAddProductModal() {
+      document.getElementById("modal-prod-title").textContent = "إضافة عطر جديد إلى المتجر";
+      document.getElementById("p-id").value = "";
+      document.getElementById("p-name").value = "";
+      document.getElementById("p-company").value = "";
+      document.getElementById("p-supplier").value = "";
+      document.getElementById("p-cost-gram").value = "2.5";
+      document.getElementById("p-sell-gram").value = "5.0";
+      document.getElementById("calc-oil-grams").value = "15";
+      document.getElementById("calc-bottle-price").value = "15";
+      document.getElementById("p-qty-grams").value = "100";
+      document.getElementById("p-min-grams").value = "20";
+      document.getElementById("p-notes").value = "";
+      calcGramProfitAndFormula();
+      openModal("modal-product");
+    }
+
+    function openEditProductModal(p) {
+      document.getElementById("modal-prod-title").textContent = "تعديل بيانات العطر: " + p.name;
+      document.getElementById("p-id").value = p.id;
+      document.getElementById("p-name").value = p.name;
+      document.getElementById("p-company").value = p.company || "";
+      document.getElementById("p-supplier").value = p.supplier || "";
+      document.getElementById("p-cost-gram").value = p.cost_gram;
+      document.getElementById("p-sell-gram").value = p.sell_gram;
+      document.getElementById("calc-oil-grams").value = "15";
+      document.getElementById("calc-bottle-price").value = "15";
+      document.getElementById("p-qty-grams").value = p.quantity;
+      document.getElementById("p-min-grams").value = p.min_stock;
+      document.getElementById("p-notes").value = p.notes || "";
+      calcGramProfitAndFormula();
+      openModal("modal-product");
+    }
+
+    // The Requested Core Formula:
+    // (كمية الزيت * سعر البيع) + سعر الزجاجة
+    function calcGramProfitAndFormula() {
+      const costGram = parseFloat(document.getElementById("p-cost-gram").value) || 0;
+      const sellGram = parseFloat(document.getElementById("p-sell-gram").value) || 0;
+      const oilGrams = parseFloat(document.getElementById("calc-oil-grams").value) || 0;
+      const bottlePrice = parseFloat(document.getElementById("calc-bottle-price").value) || 0;
+
+      // 1. Gram profit
+      const profitPerGram = sellGram - costGram;
+      const marginGram = sellGram > 0 ? ((profitPerGram / sellGram) * 100).toFixed(0) : 0;
+
+      const pEl = document.getElementById("p-profit-gram-val");
+      pEl.textContent = (profitPerGram >= 0 ? "+" : "") + profitPerGram.toFixed(2) + " ج.م";
+      pEl.style.color = profitPerGram >= 0 ? "var(--emerald)" : "var(--ruby)";
+      document.getElementById("p-margin-gram-val").textContent = marginGram + "%";
+
+      // 2. Final Compounded Bottle Formula:
+      // التكلفة النهائية = (كمية الزيت * سعر تكلفة الجرام) + سعر الزجاجة
+      // سعر البيع النهائي = (كمية الزيت * سعر بيع الجرام) + سعر الزجاجة
+      const finalCost = (oilGrams * costGram) + bottlePrice;
+      const finalSell = (oilGrams * sellGram) + bottlePrice;
+      const finalProfit = finalSell - finalCost;
+
+      document.getElementById("res-final-cost").textContent = finalCost.toFixed(2) + " ج.م";
+      document.getElementById("res-final-sell").textContent = finalSell.toFixed(2) + " ج.م";
+      document.getElementById("res-final-profit").textContent = (finalProfit >= 0 ? "+" : "") + finalProfit.toFixed(2) + " ج.م";
+    }
+
+    function saveProduct() {
+      const name = document.getElementById("p-name").value.trim();
+      const company = document.getElementById("p-company").value.trim();
+      const supplier = document.getElementById("p-supplier").value.trim();
+
+      if (!name) { alert("يرجى كتابة اسم العطر أولاً."); return; }
+      if (!company) { alert("يرجى كتابة اسم الشركة."); return; }
+      if (!supplier) { alert("يرجى كتابة اسم المورد."); return; }
+
+      const db = getDB();
+      const id = document.getElementById("p-id").value;
+
+      const prodData = {
+        name: name,
+        company: company,
+        supplier: supplier,
+        cost_gram: parseFloat(document.getElementById("p-cost-gram").value) || 0,
+        sell_gram: parseFloat(document.getElementById("p-sell-gram").value) || 0,
+        quantity: parseFloat(document.getElementById("p-qty-grams").value) || 0,
+        min_stock: parseFloat(document.getElementById("p-min-grams").value) || 20,
+        notes: document.getElementById("p-notes").value.trim()
+      };
+
+      if (id) {
+        const idx = db.products.findIndex(p => String(p.id) === String(id));
+        if (idx !== -1) {
+          db.products[idx] = { ...db.products[idx], ...prodData };
+          showToast("تم تحديث بيانات العطر بنجاح! ✨");
+        }
+      } else {
+        const newId = db.products.length > 0 ? Math.max(...db.products.map(p => p.id)) + 1 : 1;
+        db.products.push({ id: newId, ...prodData });
+        showToast("تمت إضافة العطر بنجاح! 🧴");
+      }
+
+      saveDB(db);
+      closeModal("modal-product");
+      updateCompanyDropdowns();
+      refreshAll();
+    }
+
+    function deleteProduct(id, name) {
+      if (!confirm(`هل أنت متأكد من حذف العطر:\n✦ ${name} ✦ نهائياً؟`)) return;
+      const db = getDB();
+      db.products = db.products.filter(p => p.id !== id);
+      saveDB(db);
+      showToast("تم حذف العطر 🗑️");
+      updateCompanyDropdowns();
+      refreshAll();
+    }
+
+    /* =========================================================
+       3. POS & BOTTLE COMPOUNDING SALES SYSTEM
+       ========================================================= */
+    function renderPosProductGrid() {
+      const db = getDB();
+      const prods = db.products || [];
+      const search = (document.getElementById("pos-search").value || "").toLowerCase();
+      const comp = document.getElementById("pos-company-filter").value;
+
+      const filtered = prods.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(search) || (p.company || "").toLowerCase().includes(search);
+        const matchesComp = (comp === "الكل" || p.company === comp);
+        return matchesSearch && matchesComp;
+      });
+
+      const grid = document.getElementById("pos-product-grid");
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 30px;">لا توجد عطور مطابقة.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(p => {
+        const isOutOfStock = Number(p.quantity) <= 0;
+        return `
+          <div style="background: #1B212D; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; cursor: pointer; transition: all 0.2s;"
+               onclick="${isOutOfStock ? "alert('نفد مخزون هذا الزيت العطري!')" : `openPosAddBottleModal(${p.id})`}">
+            <div style="font-weight: 700; color: #fff; font-size: 14px; margin-bottom: 3px;">${escapeHtml(p.name)}</div>
+            <div style="font-size: 11.5px; color: var(--gold); margin-bottom: 8px;">${escapeHtml(p.company || "")} &bull; مورد: ${escapeHtml(p.supplier || "")}</div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 13.5px; font-weight: 800; color: var(--text-white);">${Number(p.sell_gram).toFixed(2)} ج.م / جرام</span>
+              <span class="tag ${isOutOfStock ? "tag-red" : "tag-green"}">${p.quantity}g بالمخزن</span>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    let currentPosProd = null;
+
+    function openPosAddBottleModal(prodId) {
+      const db = getDB();
+      currentPosProd = db.products.find(p => p.id === prodId);
+      if (!currentPosProd) return;
+
+      document.getElementById("pos-selected-pid").value = currentPosProd.id;
+      document.getElementById("pos-modal-perfume-name").textContent = `${currentPosProd.name} (${currentPosProd.company || ""})`;
+      document.getElementById("pos-modal-gram-sell").value = `${Number(currentPosProd.sell_gram).toFixed(2)} ج.م للجرام`;
+      document.getElementById("pos-modal-grams").value = "15";
+      document.getElementById("pos-modal-bottle-cost").value = "15";
+      document.getElementById("pos-modal-bottles-count").value = "1";
+
+      calcPosBottleTotal();
+      openModal("modal-pos-add");
+    }
+
+    function calcPosBottleTotal() {
+      if (!currentPosProd) return;
+      const sellGram = Number(currentPosProd.sell_gram || 0);
+      const oilGrams = parseFloat(document.getElementById("pos-modal-grams").value) || 0;
+      const bottlePrice = parseFloat(document.getElementById("pos-modal-bottle-cost").value) || 0;
+      const bottlesCount = parseInt(document.getElementById("pos-modal-bottles-count").value) || 1;
+
+      // Formula: (كمية الزيت * سعر البيع) + سعر الزجاجة
+      const singleBottlePrice = (oilGrams * sellGram) + bottlePrice;
+      const total = singleBottlePrice * bottlesCount;
+
+      document.getElementById("pos-modal-total-display").textContent = total.toFixed(2) + " ج.م";
+    }
+
+    function confirmAddPosBottle() {
+      if (!currentPosProd) return;
+      const oilGrams = parseFloat(document.getElementById("pos-modal-grams").value) || 0;
+      const bottlePrice = parseFloat(document.getElementById("pos-modal-bottle-cost").value) || 0;
+      const bottlesCount = parseInt(document.getElementById("pos-modal-bottles-count").value) || 1;
+
+      const totalRequiredGrams = oilGrams * bottlesCount;
+      if (totalRequiredGrams > currentPosProd.quantity) {
+        alert(`المخزون المتوفر من هذا الزيت فقط (${currentPosProd.quantity} جرام)! والمطلوب (${totalRequiredGrams} جرام).`);
+        return;
+      }
+
+      const sellGram = Number(currentPosProd.sell_gram || 0);
+      const costGram = Number(currentPosProd.cost_gram || 0);
+
+      const singleSellPrice = (oilGrams * sellGram) + bottlePrice;
+      const singleCostPrice = (oilGrams * costGram) + bottlePrice;
+
+      cart.push({
+        product_id: currentPosProd.id,
+        name: currentPosProd.name,
+        company: currentPosProd.company,
+        oil_grams_per_bottle: oilGrams,
+        bottle_price: bottlePrice,
+        unit_price: singleSellPrice,
+        cost_price: singleCostPrice,
+        bottles_count: bottlesCount,
+        total_oil_grams: totalRequiredGrams
+      });
+
+      closeModal("modal-pos-add");
+      renderCart();
+      showToast("تمت إضافة الزجاجة إلى الفاتورة! 🛒");
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      renderCart();
+    }
+
+    function clearCart() {
+      cart = [];
+      renderCart();
+    }
+
+    function renderCart() {
+      const container = document.getElementById("cart-items-container");
+      if (cart.length === 0) {
+        container.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 40px 0;">السلة فارغة. اختر عطوراً لتركيبها.</div>`;
+      } else {
+        container.innerHTML = cart.map((item, idx) => `
+          <div class="cart-item">
+            <div style="flex: 1;">
+              <div style="font-weight: 700; color: #fff;">${escapeHtml(item.name)} <span style="font-size: 11px; color: var(--gold);">(${item.company || ""})</span></div>
+              <div style="font-size: 11.5px; color: var(--text-muted);">
+                ${item.bottles_count} زجاجة &bull; (${item.oil_grams_per_bottle}g زيت + ${item.bottle_price}ج زجاجة)
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-weight: 700; color: var(--gold);">${(item.unit_price * item.bottles_count).toFixed(2)} ج.م</span>
+              <button class="btn-icon del" onclick="removeFromCart(${idx})" title="حذف" style="background:none; border:none; color:var(--ruby); cursor:pointer;">✕</button>
+            </div>
+          </div>
+        `).join("");
+      }
+      updateCartCalculations();
+    }
+
+    function updateCartCalculations() {
+      const subtotal = cart.reduce((sum, item) => sum + (item.unit_price * item.bottles_count), 0);
+      const discount = Math.max(0, parseFloat(document.getElementById("pos-discount").value) || 0);
+      const grandTotal = Math.max(0, subtotal - discount);
+
+      document.getElementById("pos-subtotal").textContent = subtotal.toFixed(2) + " ج.م";
+      document.getElementById("pos-grand-total").textContent = grandTotal.toFixed(2) + " ج.م";
+
+      let paid = parseFloat(document.getElementById("pos-paid").value);
+      if (isNaN(paid)) {
+        document.getElementById("pos-paid").value = grandTotal.toFixed(2);
+        paid = grandTotal;
+      }
+      const change = paid - grandTotal;
+      document.getElementById("pos-change").value = (change >= 0 ? `الباقي للعميل: ${change.toFixed(2)}` : `متبقي على العميل: ${Math.abs(change).toFixed(2)}`) + " ج.م";
+    }
+
+    function completeSale() {
+      if (cart.length === 0) {
+        alert("يرجى إضافة عطور للفاتورة أولاً!");
+        return;
+      }
+
+      const db = getDB();
+      const customerName = document.getElementById("pos-customer").value;
+      const subtotal = cart.reduce((sum, item) => sum + (item.unit_price * item.bottles_count), 0);
+      const discount = parseFloat(document.getElementById("pos-discount").value) || 0;
+      const grandTotal = Math.max(0, subtotal - discount);
+      const paid = parseFloat(document.getElementById("pos-paid").value) || grandTotal;
+      const remaining = Math.max(0, grandTotal - paid);
+
+      const totalCost = cart.reduce((sum, item) => sum + (item.cost_price * item.bottles_count), 0);
+      const profit = grandTotal - totalCost;
+
+      db.settings.invoiceCounter = (db.settings.invoiceCounter || 1) + 1;
+      const invoiceNumber = "INV-" + new Date().getFullYear() + "-" + String(db.settings.invoiceCounter).padStart(4, "0");
+
+      // Deduct oil grams from inventory
+      cart.forEach(cartItem => {
+        const prod = db.products.find(p => p.id === cartItem.product_id);
+        if (prod) {
+          prod.quantity = Math.max(0, prod.quantity - cartItem.total_oil_grams);
+        }
+      });
+
+      const saleRecord = {
+        id: "sale_" + Date.now(),
+        invoiceNumber: invoiceNumber,
+        date: new Date().toLocaleString("ar-EG"),
+        customerName: customerName,
+        items: [...cart],
+        subtotal: subtotal,
+        discount: discount,
+        total: grandTotal,
+        paid: paid,
+        remaining: remaining,
+        profit: profit
+      };
+
+      db.sales.push(saleRecord);
+      saveDB(db);
+
+      clearCart();
+      document.getElementById("pos-discount").value = "0";
+
+      showToast("تمت عملية البيع وخصم الزيت بنجاح! 🛒✨");
+      refreshAll();
+      previewInvoice(saleRecord.id);
+    }
+
+    /* =========================================================
+       4. INVOICES & PRINT PREVIEW
+       ========================================================= */
+    function updateCustomerDropdowns() {
+      const db = getDB();
+      const custs = db.customers || [];
+      const select = document.getElementById("pos-customer");
+      select.innerHTML = custs.map(c => `<option value="${escapeHtml(c.name)}">${escapeHtml(c.name)} (${c.phone || "-"})</option>`).join("");
+    }
+
+    function renderInvoicesTable() {
+      const db = getDB();
+      const sales = [...(db.sales || [])].reverse();
+      const search = (document.getElementById("inv-search").value || "").toLowerCase();
+
+      const filtered = sales.filter(s =>
+        s.invoiceNumber.toLowerCase().includes(search) ||
+        s.customerName.toLowerCase().includes(search)
+      );
+
+      document.getElementById("invoices-count").textContent = filtered.length;
+      const tbody = document.getElementById("invoices-table-body");
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--text-muted); padding: 30px;">لا توجد فواتير مسجلة حتى الآن.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(s => {
+        const totalBottles = (s.items || []).reduce((sum, i) => sum + (i.bottles_count || 1), 0);
+        return `
+          <tr>
+            <td style="color: var(--gold); font-weight: 700;">#${s.invoiceNumber}</td>
+            <td>${s.date}</td>
+            <td style="font-weight: 600;">${escapeHtml(s.customerName)}</td>
+            <td>${totalBottles} زجاجات</td>
+            <td>${s.discount.toFixed(2)}</td>
+            <td style="font-weight: 700;">${s.total.toFixed(2)} ج.م</td>
+            <td>${s.paid.toFixed(2)}</td>
+            <td style="color: ${s.remaining > 0 ? "var(--ruby)" : "var(--emerald)"}; font-weight: 600;">${s.remaining.toFixed(2)}</td>
+            <td style="text-align: left; white-space: nowrap;">
+              <button class="btn btn-sm btn-subtle" onclick="previewInvoice('${s.id}')">عرض 🖨️</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteInvoice('${s.id}')" title="إلغاء الفاتورة وإرجاع كميات الزيت للمخزون">إلغاء واسترجاع 🔄</button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function previewInvoice(saleId) {
+      const db = getDB();
+      const sale = db.sales.find(s => s.id === saleId);
+      if (!sale) return;
+
+      const area = document.getElementById("invoice-printable-area");
+      area.innerHTML = `
+        <div class="invoice-print-area" style="padding: 10px; font-family: var(--font);">
+          <div style="text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 15px; margin-bottom: 20px;">
+            <div style="font-size: 26px; font-weight: 800; color: var(--gold); letter-spacing: 2px;">✦ رُ وَ اء ✦</div>
+            <div style="font-size: 13px; color: var(--text-muted); font-weight: 600;">RUWAA STORE &bull; للأطياب والعطور الفاخرة</div>
+            <div style="font-size: 12px; margin-top: 5px;">فاتورة مبيعات ضريبية مبسطة</div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 18px;">
+            <div>
+              <div><strong>رقم الفاتورة:</strong> ${sale.invoiceNumber}</div>
+              <div><strong>التاريخ:</strong> ${sale.date}</div>
+            </div>
+            <div style="text-align: left;">
+              <div><strong>العميل:</strong> ${escapeHtml(sale.customerName)}</div>
+              <div><strong>طريقة الدفع:</strong> نقدي</div>
+            </div>
+          </div>
+
+          <div class="table-responsive" style="margin-bottom: 20px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>العطر والتركيبة</th>
+                  <th style="text-align: center;">العدد</th>
+                  <th style="text-align: center;">سعر الزجاجة</th>
+                  <th style="text-align: left;">الإجمالي</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${sale.items.map(item => `
+                  <tr>
+                    <td style="font-weight: 600;">
+                      ${escapeHtml(item.name)} <span style="font-size: 11px; color: var(--gold);">(${escapeHtml(item.company || "")})</span>
+                      <div style="font-size: 11px; color: var(--text-muted);">${item.oil_grams_per_bottle}g زيت عالي التركيز</div>
+                    </td>
+                    <td style="text-align: center;">${item.bottles_count}</td>
+                    <td style="text-align: center;">${Number(item.unit_price).toFixed(2)}</td>
+                    <td style="text-align: left; font-weight: 700;">${(item.unit_price * item.bottles_count).toFixed(2)} ج.م</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>
+
+          <div style="margin-right: auto; width: 260px; font-size: 13px; border-top: 1px solid var(--border); padding-top: 10px;">
+            <div style="display: flex; justify-content: space-between; padding: 4px 0;">
+              <span>المجموع الفرعي:</span>
+              <span>${Number(sale.subtotal).toFixed(2)} ج.م</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 4px 0;">
+              <span>الخصم:</span>
+              <span>${Number(sale.discount).toFixed(2)} ج.م</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 8px 0; font-size: 16px; font-weight: 800; color: var(--gold); border-top: 1px solid var(--gold);">
+              <span>الإجمالي النهائي:</span>
+              <span>${Number(sale.total).toFixed(2)} ج.م</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 4px 0;">
+              <span>المدفوع:</span>
+              <span>${Number(sale.paid).toFixed(2)} ج.م</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 4px 0; color: ${sale.remaining > 0 ? "var(--ruby)" : "var(--emerald)"};">
+              <span>المتبقي:</span>
+              <span>${Number(sale.remaining).toFixed(2)} ج.م</span>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 35px; border-top: 1px dashed var(--border); padding-top: 15px; font-size: 12px; color: var(--text-muted);">
+            شكراً لثقتكم واختياركم رُوَاء للأطياب والعطور &bull; بضاعتكم عطرتم بها أوقاتكم!
+          </div>
+        </div>
+      `;
+      openModal("modal-invoice");
+
+      // Wire up cancel button inside invoice preview
+      const btnCancel = document.getElementById("btn-cancel-invoice");
+      if (btnCancel) {
+        btnCancel.onclick = () => deleteInvoice(sale.id);
+      }
+    }
+
+    function deleteInvoice(saleId) {
+      const db = getDB();
+      const sale = db.sales.find(s => s.id === saleId);
+      if (!sale) return;
+
+      const itemsSummary = (sale.items || []).map(i => `• ${i.name} (${i.company || ""}): ${i.total_oil_grams || (i.oil_grams_per_bottle * i.bottles_count)} جرام زيت`).join("\n");
+      const confirmMsg = `هل أنت متأكد من حذف وإلغاء الفاتورة رقم: (${sale.invoiceNumber})؟\n\nتنبيه: سيتم استرجاع الزيوت التالية وإعادتها فوراً إلى المخزون:\n${itemsSummary}`;
+
+      if (!confirm(confirmMsg)) return;
+
+      // Return oil grams to products inventory
+      (sale.items || []).forEach(item => {
+        const prod = db.products.find(p => p.id === item.product_id);
+        if (prod) {
+          const gramsToReturn = Number(item.total_oil_grams || (item.oil_grams_per_bottle * item.bottles_count) || 0);
+          prod.quantity = Number(prod.quantity || 0) + gramsToReturn;
+        }
+      });
+
+      // Remove sale record
+      db.sales = db.sales.filter(s => s.id !== saleId);
+      saveDB(db);
+
+      closeModal("modal-invoice");
+      showToast(`تم حذف الفاتورة #${sale.invoiceNumber} وإرجاع كميات الزيوت للمخزون بنجاح! 🔄📦`);
+      refreshAll();
+    }
+
+    /* =========================================================
+       5. CUSTOMERS MANAGEMENT
+       ========================================================= */
+    function renderCustomersTable() {
+      const db = getDB();
+      const custs = db.customers || [];
+      const sales = db.sales || [];
+      const search = (document.getElementById("cust-search").value || "").toLowerCase();
+
+      const filtered = custs.filter(c =>
+        c.name.toLowerCase().includes(search) || (c.phone || "").includes(search)
+      );
+
+      document.getElementById("custs-count").textContent = filtered.length;
+      const tbody = document.getElementById("customers-table-body");
+
+      tbody.innerHTML = filtered.map(c => {
+        const custSales = sales.filter(s => s.customerName === c.name);
+        const totalSpent = custSales.reduce((sum, s) => sum + Number(s.total || 0), 0);
+
+        return `
+          <tr>
+            <td style="color: var(--text-muted);">#${c.id}</td>
+            <td style="font-weight: 700; color: #fff;">${escapeHtml(c.name)}</td>
+            <td>${escapeHtml(c.phone || "-")}</td>
+            <td>${escapeHtml(c.address || "-")}</td>
+            <td style="color: var(--gold); font-weight: 700;">${totalSpent.toFixed(2)} ج.م</td>
+            <td>${custSales.length} فواتير</td>
+            <td style="color: var(--text-muted);">${escapeHtml(c.notes || "-")}</td>
+            <td style="text-align: left;">
+              <button class="btn btn-sm btn-subtle" onclick='openEditCustomerModal(${JSON.stringify(c).replace(/'/g, "&apos;")})'>✏️</button>
+              ${c.id !== 1 ? `<button class="btn btn-sm btn-danger" onclick="deleteCustomer(${c.id}, '${escapeHtml(c.name)}')">🗑️</button>` : ""}
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function openAddCustomerModal() {
+      document.getElementById("modal-cust-title").textContent = "إضافة عميل جديد";
+      document.getElementById("c-id").value = "";
+      document.getElementById("c-name").value = "";
+      document.getElementById("c-phone").value = "";
+      document.getElementById("c-address").value = "";
+      document.getElementById("c-notes").value = "";
+      openModal("modal-customer");
+    }
+
+    function openEditCustomerModal(c) {
+      document.getElementById("modal-cust-title").textContent = "تعديل بيانات العميل: " + c.name;
+      document.getElementById("c-id").value = c.id;
+      document.getElementById("c-name").value = c.name;
+      document.getElementById("c-phone").value = c.phone || "";
+      document.getElementById("c-address").value = c.address || "";
+      document.getElementById("c-notes").value = c.notes || "";
+      openModal("modal-customer");
+    }
+
+    function saveCustomer() {
+      const name = document.getElementById("c-name").value.trim();
+      if (!name) { alert("يرجى كتابة اسم العميل."); return; }
+
+      const db = getDB();
+      const id = document.getElementById("c-id").value;
+
+      const custData = {
+        name: name,
+        phone: document.getElementById("c-phone").value.trim(),
+        address: document.getElementById("c-address").value.trim(),
+        notes: document.getElementById("c-notes").value.trim()
+      };
+
+      if (id) {
+        const idx = db.customers.findIndex(c => String(c.id) === String(id));
+        if (idx !== -1) db.customers[idx] = { ...db.customers[idx], ...custData };
+      } else {
+        const newId = db.customers.length > 0 ? Math.max(...db.customers.map(c => c.id)) + 1 : 1;
+        db.customers.push({ id: newId, ...custData });
+      }
+
+      saveDB(db);
+      closeModal("modal-customer");
+      showToast("تم حفظ بيانات العميل بنجاح! 👥");
+      updateCustomerDropdowns();
+      refreshAll();
+    }
+
+    function deleteCustomer(id, name) {
+      if (id === 1) { alert("لا يمكن حذف العميل الافتراضي."); return; }
+      if (!confirm(`هل أنت متأكد من حذف العميل: ${name}؟`)) return;
+      const db = getDB();
+      db.customers = db.customers.filter(c => c.id !== id);
+      saveDB(db);
+      showToast("تم حذف العميل");
+      updateCustomerDropdowns();
+      refreshAll();
+    }
+
+    /* =========================================================
+       6. EXPENSES MANAGEMENT
+       ========================================================= */
+    function renderExpensesTable() {
+      const db = getDB();
+      const exps = [...(db.expenses || [])].reverse();
+      const cat = document.getElementById("exp-filter-cat").value;
+
+      const filtered = exps.filter(e => cat === "الكل" || e.category === cat);
+      const totalVal = filtered.reduce((sum, e) => sum + Number(e.amount || 0), 0);
+      document.getElementById("exp-total-val").textContent = totalVal.toFixed(2) + " ج.م";
+
+      const tbody = document.getElementById("expenses-table-body");
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 30px;">لا توجد مصروفات مسجلة.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(e => `
+        <tr>
+          <td style="color: var(--text-muted);">#${e.id}</td>
+          <td style="font-weight: 700; color: #fff;">${escapeHtml(e.title)}</td>
+          <td style="color: var(--ruby); font-weight: 700;">${Number(e.amount).toFixed(2)} ج.م</td>
+          <td><span style="background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px; font-size: 12px;">${escapeHtml(e.category)}</span></td>
+          <td>${e.date}</td>
+          <td style="color: var(--text-muted);">${escapeHtml(e.notes || "-")}</td>
+          <td style="text-align: left;">
+            <button class="btn btn-sm btn-danger" onclick="deleteExpense('${e.id}')">🗑️</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function openAddExpenseModal() {
+      document.getElementById("e-title").value = "";
+      document.getElementById("e-amount").value = "0.0";
+      document.getElementById("e-category").value = "شحن وتوصيل";
+      document.getElementById("e-notes").value = "";
+      openModal("modal-expense");
+    }
+
+    function saveExpense() {
+      const title = document.getElementById("e-title").value.trim();
+      const amount = parseFloat(document.getElementById("e-amount").value) || 0;
+      if (!title || amount <= 0) { alert("يرجى إدخال اسم المصروف ومبلغ صحيح."); return; }
+
+      const db = getDB();
+      db.expenses.push({
+        id: "exp_" + Date.now(),
+        title: title,
+        amount: amount,
+        category: document.getElementById("e-category").value,
+        date: document.getElementById("e-date").value || new Date().toISOString().split("T")[0],
+        notes: document.getElementById("e-notes").value.trim()
+      });
+
+      saveDB(db);
+      closeModal("modal-expense");
+      showToast("تم تسجيل المصروف بنجاح! 💸");
+      refreshAll();
+    }
+
+    function deleteExpense(id) {
+      if (!confirm("هل أنت متأكد من حذف هذا المصروف؟")) return;
+      const db = getDB();
+      db.expenses = db.expenses.filter(e => e.id !== id);
+      saveDB(db);
+      showToast("تم حذف المصروف");
+      refreshAll();
+    }
+
+    /* =========================================================
+       7. REPORTS & ANALYTICS
+       ========================================================= */
+    function renderReports() {
+      const db = getDB();
+      const sales = db.sales || [];
+      const exps = db.expenses || [];
+      const prods = db.products || [];
+
+      const totalSales = sales.reduce((sum, s) => sum + Number(s.total || 0), 0);
+      const totalProfitFromSales = sales.reduce((sum, s) => sum + Number(s.profit || 0), 0);
+      const totalExp = exps.reduce((sum, e) => sum + Number(e.amount || 0), 0);
+      const cogs = totalSales - totalProfitFromSales;
+      const netProfit = totalProfitFromSales - totalExp;
+
+      document.getElementById("rep-total-sales").textContent = totalSales.toFixed(2) + " ج.م";
+      document.getElementById("rep-total-cogs").textContent = cogs.toFixed(2) + " ج.م";
+      document.getElementById("rep-total-exp").textContent = totalExp.toFixed(2) + " ج.م";
+      document.getElementById("rep-net-profit").textContent = netProfit.toFixed(2) + " ج.م";
+      document.getElementById("rep-net-profit").style.color = netProfit >= 0 ? "var(--gold)" : "var(--ruby)";
+
+      // Top products sold (grams)
+      const productSalesMap = {};
+      sales.forEach(s => {
+        (s.items || []).forEach(item => {
+          if (!productSalesMap[item.name]) {
+            productSalesMap[item.name] = { company: item.company || "-", grams: 0, revenue: 0 };
+          }
+          productSalesMap[item.name].grams += (item.total_oil_grams || 0);
+          productSalesMap[item.name].revenue += (item.unit_price * item.bottles_count);
+        });
+      });
+
+      const topList = Object.entries(productSalesMap).sort((a, b) => b[1].grams - a[1].grams).slice(0, 5);
+      const repTopTbody = document.getElementById("rep-top-products");
+      if (topList.length === 0) {
+        repTopTbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 20px;">لا توجد مبيعات بعد.</td></tr>`;
+      } else {
+        repTopTbody.innerHTML = topList.map(([name, data]) => `
+          <tr>
+            <td style="font-weight: 700; color: #fff;">${escapeHtml(name)}</td>
+            <td style="color: var(--gold);">${escapeHtml(data.company)}</td>
+            <td style="font-weight: 700;">${data.grams} جرام</td>
+            <td style="font-weight: 700;">${data.revenue.toFixed(2)} ج.م</td>
+          </tr>
+        `).join("");
+      }
+
+      // Inventory Valuation
+      const totalGramsInStock = prods.reduce((sum, p) => sum + Number(p.quantity || 0), 0);
+      const invCost = prods.reduce((sum, p) => sum + (Number(p.cost_gram || 0) * Number(p.quantity || 0)), 0);
+      const invSell = prods.reduce((sum, p) => sum + (Number(p.sell_gram || 0) * Number(p.quantity || 0)), 0);
+
+      document.getElementById("rep-total-grams").textContent = totalGramsInStock + " جرام";
+      document.getElementById("rep-inv-cost").textContent = invCost.toFixed(2) + " ج.م";
+      document.getElementById("rep-inv-sell").textContent = invSell.toFixed(2) + " ج.م";
+    }
+
+    /* =========================================================
+       8. BACKUP & RESTORE
+       ========================================================= */
+    function exportDatabaseBackup() {
+      const db = getDB();
+      const jsonStr = JSON.stringify(db, null, 2);
+      const blob = new Blob([jsonStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const dateStr = new Date().toISOString().split("T")[0];
+      a.href = url;
+      a.download = `ruwaa_store_backup_${dateStr}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast("تم تنزيل النسخة الاحتياطية بنجاح! 💾");
+    }
+
+    function importDatabaseBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (imported.products && imported.sales) {
+            saveDB(imported);
+            showToast("تم استعادة النسخة الاحتياطية بنجاح! ✨");
+            updateCompanyDropdowns();
+            refreshAll();
+          } else {
+            alert("الملف غير صالح أو لا يحتوي على بنية بيانات رُوَاء الصحيحة.");
+          }
+        } catch (err) {
+          alert("خطأ في قراءة ملف النسخة الاحتياطية.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function resetDatabasePrompt() {
+      const first = confirm("تحذير: هل أنت متأكد من مسح جميع المنتجات والمبيعات والمصروفات؟");
+      if (!first) return;
+      const second = prompt("لتأكيد المسح التام، اكتب كلمة (نعم) في المربع أدناه:");
+      if (second === "نعم") {
+        localStorage.removeItem(DB_KEY);
+        getDB();
+        showToast("تم مسح البيانات وإعادة ضبط المصنع.");
+        updateCompanyDropdowns();
+        refreshAll();
+      }
+    }
+
+    /* =========================================================
+       HELPERS & MODALS
+       ========================================================= */
+    function openModal(id) { document.getElementById(id).classList.add("active"); }
+    function closeModal(id) { document.getElementById(id).classList.remove("active"); }
+
+    function showToast(msg) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      setTimeout(() => t.classList.remove("show"), 3200);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str).replace(/[&<>'"]/g, 
+        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+      );
+    }
+  </script>
+</body>
+</html>
